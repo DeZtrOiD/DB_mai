@@ -1,0 +1,144 @@
+@startuml
+hide circle
+skinparam linetype ortho
+skinparam entityAttributeIconSize 0
+
+entity "users" {
+  * user_id : bigint <<PK>>
+  --
+  username : varchar
+  birth_date : date
+  email : varchar
+  password_hash : varchar
+}
+
+entity "content_types" {
+  * type_id : smallint <<PK>>
+  --
+  type_name : varchar
+}
+
+entity "content_items" {
+  * item_id : bigint <<PK>>
+  --
+  type_id : smallint <<FK>>
+  title : varchar
+  description : text
+  language_code : char(2)
+}
+
+entity "genres" {
+  * genre_id : smallint <<PK>>
+  --
+  name : varchar
+}
+
+entity "content_genres" {
+  * item_id : bigint <<PK,FK>>
+  * genre_id : smallint <<PK,FK>>
+}
+
+entity "authors" {
+  * author_id : bigint <<PK>>
+  --
+  name : varchar
+  birth_date : date
+}
+
+entity "roles" {
+  * role_id : smallint <<PK>>
+  --
+  role_name : varchar
+}
+
+entity "content_credits" {
+  * item_id : bigint <<PK,FK>>
+  * author_id : bigint <<PK,FK>>
+  * role_id : smallint <<PK,FK>>
+}
+
+entity "book_metadata" {
+  * isbn : varchar <<PK>>
+  --
+  pages : int
+  publication_date : date
+}
+
+entity "book_details" {
+  * item_id : bigint <<PK,FK>>
+  --
+  isbn : varchar <<FK>>
+}
+
+entity "film_details" {
+  * item_id : bigint <<PK,FK>>
+  --
+  duration_minutes : int
+  age_rating : varchar
+  publication_date : date
+}
+
+entity "music_details" {
+  * item_id : bigint <<PK,FK>>
+  --
+  duration_seconds : int
+  album : varchar
+  track_number : int
+  publication_date : date
+}
+
+entity "user_collections" {
+  * user_id : bigint <<PK,FK>>
+  * item_id : bigint <<PK,FK>>
+}
+
+entity "playlists" {
+  * playlist_id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>>
+  name : varchar
+  description : text
+  is_public : boolean
+}
+
+entity "playlist_items" {
+  * playlist_id : bigint <<PK,FK>>
+  * item_id : bigint <<PK,FK>>
+}
+
+entity "ratings" {
+  * user_id : bigint <<PK,FK>>
+  * item_id : bigint <<PK,FK>>
+  --
+  rating_value : smallint
+  review_text : text
+  rated_at : timestamptz
+}
+
+
+content_types ||--o{ content_items
+
+content_items ||--o{ content_genres
+genres ||--o{ content_genres
+
+content_items ||--o{ content_credits
+authors ||--o{ content_credits
+roles ||--o{ content_credits
+
+content_items ||--o| book_details
+book_metadata ||--o| book_details
+
+content_items ||--o| film_details
+content_items ||--o| music_details
+
+users ||--o{ user_collections
+content_items ||--o{ user_collections
+
+users ||--o{ playlists
+playlists ||--o{ playlist_items
+content_items ||--o{ playlist_items
+
+users ||--o{ ratings
+content_items ||--o{ ratings
+
+@enduml
