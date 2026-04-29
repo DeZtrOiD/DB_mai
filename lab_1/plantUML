@@ -12,12 +12,6 @@ entity "users" {
   password_hash : varchar
 }
 
-entity "content_types" {
-  * type_id : smallint <<PK>>
-  --
-  type_name : varchar
-}
-
 entity "content_items" {
   * item_id : bigint <<PK>>
   --
@@ -115,8 +109,6 @@ entity "ratings" {
   rated_at : timestamptz
 }
 
-
-content_types ||--o{ content_items
 
 content_items ||--o{ content_genres
 genres ||--o{ content_genres
