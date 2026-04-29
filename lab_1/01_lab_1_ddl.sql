@@ -10,14 +10,8 @@ CREATE TABLE lab_1.users (
 );
 
 
-CREATE TABLE lab_1.content_types (
-    type_id SMALLINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    type_name VARCHAR(20) NOT NULL UNIQUE
-);
-
 CREATE TABLE lab_1.content_items (
     item_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    type_id SMALLINT NOT NULL REFERENCES lab_1.content_types(type_id) ON DELETE RESTRICT,
     title VARCHAR(255) NOT NULL,
     description TEXT,
     language_code CHAR(2)
