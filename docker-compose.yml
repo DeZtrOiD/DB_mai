@@ -12,6 +12,9 @@ services:
       - ./init:/docker-entrypoint-initdb.d
       - ./lab_1:/lab_1
       - ./lab_2:/lab_2
-
+      - ./lab_3:/lab_3
+      # - ./lab_4:/lab_4
+      # - ./lab_5:/lab_5
+      # - ./lab_6:/lab_6
 volumes:
   pg_data:
