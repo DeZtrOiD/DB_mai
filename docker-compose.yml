@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:15-alpine
+    image: postgres:15
     container_name: postgres
     environment:
       POSTGRES_USER: user
@@ -13,7 +13,7 @@ services:
       - ./lab_1:/lab_1
       - ./lab_2:/lab_2
       - ./lab_3:/lab_3
-      # - ./lab_4:/lab_4
+      - ./lab_4:/lab_4
       # - ./lab_5:/lab_5
       # - ./lab_6:/lab_6
 volumes:
